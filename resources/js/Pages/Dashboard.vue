@@ -1,7 +1,14 @@
 <script setup>
+import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+
+const { props } = usePage();
+const guests = ref(props.visitors);
+
+
 </script>
+
 <template>
     <AuthenticatedLayout>
         <template #header>
@@ -19,3 +26,4 @@ import { Head } from '@inertiajs/vue3';
         </div>
     </AuthenticatedLayout>
 </template>
+

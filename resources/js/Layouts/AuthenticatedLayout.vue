@@ -9,7 +9,15 @@ import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
 </script>
-
+<script>
+export default {
+  methods: {
+    showAlert() {
+      this.$swal('Hello Vue world!!!');
+    },
+  },
+};
+</script>
 <template>
     <div class="min-h-screen bg-gray-100 flex">
         <!-- Sidebar -->
@@ -17,7 +25,8 @@ const showingNavigationDropdown = ref(false);
             <div class="w-64 flex flex-col">
                 <div class="p-4">
                     <Link :href="route('dashboard')">
-                        <ApplicationLogo class="block h-9 w-auto fill-current text-white" />
+                        <!-- <ApplicationLogo class="block h-9 w-auto fill-current text-white" /> -->
+                    <img src="/build/assets/images/logo-trion.png" class="w-12 h-12 fill-current text-gray-500" />
                     </Link>
                 </div>
                 <nav class="flex-1 px-2 py-2 space-y-2">
@@ -66,7 +75,7 @@ const showingNavigationDropdown = ref(false);
                             </div>
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')">Dashboard</NavLink>
+                                <NavLink :href="route('dashboard')"></NavLink>
                             </div>
                         </div>
 

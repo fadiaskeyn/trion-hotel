@@ -33,7 +33,16 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/data-tamu', [DataTamuController::class, 'index'])->name('data-tamu');
+
+
+
+Route::get('/data-tamu', [DataTamuController::class, 'index'])->name('data-tamu.index');
+Route::get('/data-tamu/create', [DataTamuController::class, 'create'])->name('data-tamu.create');
+Route::post('/data-tamu', [DataTamuController::class, 'store'])->name('data-tamu.store');
+Route::get('/data-tamu/{id}/edit', [DataTamuController::class, 'edit'])->name('data-tamu.edit');
+Route::put('/data-tamu/{id}', [DataTamuController::class, 'update'])->name('data-tamu.update');
+Route::delete('/data-tamu/{id}', [DataTamuController::class, 'destroy'])->name('data-tamu.destroy');
+
 Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan');
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
 Route::get('/data-kamar', [DataKamarController::class, 'index'])->name('data-kamar');
