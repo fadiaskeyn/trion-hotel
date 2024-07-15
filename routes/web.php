@@ -36,6 +36,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 
 
+//  Route Untuk Tamu
 Route::get('/data-tamu', [DataTamuController::class, 'index'])->name('data-tamu.index');
 Route::get('/data-tamu/create', [DataTamuController::class, 'create'])->name('data-tamu.create');
 Route::post('/data-tamu', [DataTamuController::class, 'store'])->name('data-tamu.store');
@@ -43,9 +44,17 @@ Route::get('/data-tamu/{id}/edit', [DataTamuController::class, 'edit'])->name('d
 Route::put('/data-tamu/{id}', [DataTamuController::class, 'update'])->name('data-tamu.update');
 Route::delete('/data-tamu/{id}', [DataTamuController::class, 'destroy'])->name('data-tamu.destroy');
 
+// Route Untuk Room
+Route::get('/kamar', [DataKamarController::class, 'index'])->name('kamar.index');
+Route::get('/kamar/create', [DataKamarController::class, 'create'])->name('kamar.create');
+Route::get('/kamar/{id}/edit', [DataKamarController::class, 'edit'])->name('kamar.edit');
+Route::post('/kamar/store', [DataKamarController::class, 'store'])->name('kamar.store');
+Route::put('/kamar/{id}', [DataKamarController::class, 'update'])->name('kamar.update');
+Route::delete('/kamar/{id}', [DataKamarController::class, 'destroy'])->name('kamar.destroy');
+
+
 Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan');
 Route::get('/pembayaran', [PembayaranController::class, 'index'])->name('pembayaran');
-Route::get('/data-kamar', [DataKamarController::class, 'index'])->name('data-kamar');
 Route::get('/laporan-pemasukan', [LaporanController::class, 'keluar'])->name('laporan-pemasukan');
 Route::get('/laporan-pengeluaran', [LaporanController::class, 'masuk'])->name('laporan-pengeluaran');
 Route::get('/user', [UserController::class, 'index'])->name('user');

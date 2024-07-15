@@ -44,7 +44,7 @@ export default {
                             <Link :href="route('pembayaran')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pembayaran</Link>
                         </li>
                         <li>
-                            <Link :href="route('data-kamar')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Data Kamar</Link>
+                            <Link :href="route('kamar.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Data Kamar</Link>
                         </li>
                         <li>
                             <Link :href="route('laporan-pemasukan')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Laporan Pemasukan</Link>
