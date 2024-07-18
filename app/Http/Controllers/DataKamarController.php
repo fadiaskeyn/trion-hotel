@@ -21,6 +21,7 @@ class DataKamarController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
         $data = $request->validate([
             'room_number' => 'required',
             'room_price' => 'required',
@@ -29,6 +30,9 @@ class DataKamarController extends Controller
         Rooms::create($data);
         return redirect()->route('kamar.index')->with('success', 'Data kamar berhasil disimpan');
     }
+
+
+    
 
     public function edit(string $id)
     {

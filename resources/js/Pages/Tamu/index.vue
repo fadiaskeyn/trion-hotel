@@ -29,7 +29,7 @@
                                 <td class="px-4 py-2 border">{{ guest.address }}</td>
                                 <td class="px-4 py-2 border">{{ guest.phone }}</td>
                                 <td class="px-4 py-2 border">
-                                    <button class="bg-blue-500 text-white px-2 py-1 rounded">Order</button>
+                                    <button @click="order(guest.id)" class="bg-blue-500 text-white px-2 py-1 rounded">Order</button>
                                     <button @click="edit(guest.id)" class="bg-green-500 text-white px-2 py-1 rounded">Edit</button>
                                     <button @click="hapus(guest.id)" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
                                 </td>
@@ -104,6 +104,12 @@ function hapus(id) {
         }
     });
 }
+
+function order(guestId) {
+    window.location.href = route('order.create', guestId);
+}
+
+
 </script>
 
 <style scoped>

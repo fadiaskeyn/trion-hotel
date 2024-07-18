@@ -38,7 +38,7 @@ export default {
                             <Link :href="route('data-tamu.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Data Tamu</Link>
                         </li>
                         <li>
-                            <Link :href="route('pemesanan')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pemesanan</Link>
+                            <Link :href="route('order.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pemesanan</Link>
                         </li>
                         <li>
                             <Link :href="route('pembayaran')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pembayaran</Link>
