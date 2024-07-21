@@ -33,7 +33,6 @@ class PemesananController extends Controller
                 'extra_bed' => 'nullable|integer',
                 'rooms' => 'required|integer',
                 'amount' => 'required|numeric',
-                'payment_method' => 'required|string',
             ]);
 
             Order::create([
@@ -44,8 +43,6 @@ class PemesananController extends Controller
                 'extra_bed' => $request->extra_bed,
                 'rooms' => $request->rooms,
                 'amount' => $request->amount,
-                'payment_method' => $request->payment_method,
-                'payment_date' => $request->payment_date,
             ]);
 
             return redirect()->route('order.index')->with('success', 'Data pemesanan berhasil ditambahkan');
@@ -74,7 +71,6 @@ class PemesananController extends Controller
                 'extra_bed' => 'nullable|integer',
                 'rooms' => 'required|integer',
                 'amount' => 'required|numeric',
-                'payment_method' => 'required|string',
             ]);
 
             $order = Order::findOrFail($id);
@@ -85,8 +81,6 @@ class PemesananController extends Controller
                 'extra_bed' => $request->extra_bed,
                 'rooms' => $request->rooms,
                 'amount' => $request->amount,
-                'payment_method' => $request->payment_method,
-                'payment_date' => $request->payment_date,
             ]);
             return redirect()->route('order.index')->with('success', 'Data pemesanan berhasil diubah');
         }

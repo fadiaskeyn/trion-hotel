@@ -9,9 +9,9 @@
                     <div class="flex items-center mb-4">
                         <button @click="tambah" name="tambah" class="bg-blue-500 text-white px-4 py-2 rounded mr-4">Tambah</button>
                         <input type="text" v-model="searchQuery" class="border border-gray-300 p-2 rounded flex-grow" placeholder="Cari...">
-                        <button @click="cetakPdf" class="bg-green-500 text-white px-4 py-2 rounded ml-4">Cetak PDF</button>
+                       <button @click="cetakpdf" class="bg-green-500 text-white px-4 py-2 rounded ml-4">Cetak PDF</button>
                     </div>
-                    <table class="min-w-full bg-white border">
+                    <table class="min-w-full bg-white border" name="table">
                         <thead class="bg-gray-200">
                             <tr>
                                 <th class="px-4 py-2 border">No</th>
@@ -30,7 +30,9 @@
                                 <td class="px-4 py-2 border">{{ cashout.tanggal }}</td>
                                 <td class="px-4 py-2 border">{{ cashout.keterangan }}</td>
                                 <td class="px-4 py-2 border">{{ cashout.nominal }}</td>
-                                <td class="px-4 py-2 border">{{ cashout.bukti }}</td>
+                                <td class="px-4 py-2 border">
+                                     <img src="/build/assets/images/tf.png" class="w-10 h-10 fill-current text-gray-500" @click="bukti(cashout.id)" id="cetak" name="cetak"/>
+</td>
                                 <td class="px-4 py-2 border">
                                     <button @click="edit(cashout.id)" class="bg-green-500 text-white px-2 py-1 rounded">Edit</button>
                                     <button @click="hapus(cashout.id)" class="bg-red-500 text-white px-2 py-1 rounded">Hapus</button>
@@ -116,6 +118,52 @@ function hapus(id) {
         }
     });
 }
+
+
+function cetakpdf() {
+    // Ambil elemen tabel dengan id 'table'
+    const table = document.querySelector('table[name="table"]').outerHTML;
+
+    // Buat dokumen baru
+    const printWindow = window.open('', '', 'height=600,width=800');
+
+    // Sisipkan HTML tabel ke dalam dokumen
+    printWindow.document.write('<html><head><title>Cetak PDF</title>');
+    printWindow.document.write('<style>table { width: 100%; border-collapse: collapse; } th, td { border: 1px solid black; padding: 8px; text-align: left; } th { background-color: #f2f2f2; }</style>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(table);
+    printWindow.document.write('</body></html>');
+
+    // Tunggu sampai konten selesai dimuat, lalu cetak
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+}
+
+
+const bukti = async (id) => {
+    try {
+        const response = await axios.get(route('cashout.show', id));
+        const cashout = response.data;
+
+        Swal.fire({
+            title: "Sukses",
+            text: "Berikut Bukti Pembayaran yang Anda Cari",
+            imageUrl: cashout.proof_url,
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: "Custom image"
+        });
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Gagal memuat bukti pembayaran',
+        });
+        console.log(error);
+    }
+};
+
 
 function cetakPdf() {
     // Implement your PDF generation logic here

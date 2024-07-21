@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="mb-4">
+                    <!-- <div class="mb-4">
                         <label for="payment_method" class="block text-sm font-medium text-gray-700">Metode Bayar</label>
                         <div class="mt-1">
                             <select v-model="form.payment_method" name="payment_method" id="payment_method" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
@@ -41,13 +41,8 @@
                         <div class="mt-1">
                             <input v-model="form.payment_date" type="date" name="payment_date" id="payment_date" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
                         </div>
-                    </div>
-                    <div class="mb-4">
-                        <label for="amount" class="block text-sm font-medium text-gray-700">Total Harga</label>
-                        <div class="mt-1">
-                            <input v-model="form.amount" type="number" name="amount" id="amount" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
-                        </div>
-                    </div>
+                    </div> -->
+
                          <div class="flex items-center mb-4">
                     <div class="mb-4">
                         <label for="extra_bed" class="block text-sm font-medium text-gray-700">Extra Bed</label>
@@ -62,6 +57,12 @@
                         </div>
                     </div>
                          </div>
+                          <div class="mb-4">
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Total Harga</label>
+                        <div class="mt-1">
+                            <input v-model="form.amount" type="number" name="amount" id="amount" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md" />
+                        </div>
+                    </div>
                     <div class="flex space-x-4">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">SIMPAN</button>
                         <button type="button" @click="cancel" class="bg-red-500 text-white px-4 py-2 rounded">BATAL</button>

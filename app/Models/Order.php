@@ -24,4 +24,11 @@ class Order extends Model
     {
         return $this->belongsTo(Visitor::class);
     }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
+
 }
+

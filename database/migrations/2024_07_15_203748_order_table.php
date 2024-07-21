@@ -21,8 +21,6 @@ return new class extends Migration
             $table->integer('extra_bed')->nullable();
             $table->integer('rooms')->nullable();
             $table->double('amount')->nullable();
-            $table->string('payment_method')->nullable();
-            $table->dateTime('payment_date')->nullable();
             $table->timestamps();
         });
     }
