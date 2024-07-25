@@ -31,7 +31,7 @@ class UserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'level' => $request->level,
+            'role' => $request->level,
         ]);
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -59,7 +59,7 @@ class UserController extends Controller
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
-        $user->level = $request->level;
+        $user->role = $request->level;
         $user->save();
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
