@@ -42,24 +42,24 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { useForm, usePage } from '@inertiajs/vue3';
+import { ref, onMounted } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Swal from 'sweetalert2';
 
 const { props } = usePage();
 const visitor = props.visitor;
 
-const form = useForm({
-    name: visitor.name,
-    nik: visitor.nik,
-    address: visitor.address,
-    phone: visitor.phone
+const form = ref({
+    name: visitor.name || '',
+    nik: visitor.nik || '',
+    address: visitor.address || '',
+    phone: visitor.phone || ''
 });
 
 function saveGuest() {
-    form.put(route('data-tamu.update', visitor.id), {
-        onSuccess: () => {
+    axios.put(route('data-tamu.update', visitor.id), form.value)
+        .then(() => {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
@@ -67,8 +67,10 @@ function saveGuest() {
             }).then(() => {
                 window.location.href = route('data-tamu.index');
             });
-        }
-    });
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+        });
 }
 
 function cancel() {

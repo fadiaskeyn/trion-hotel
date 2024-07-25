@@ -1,49 +1,12 @@
-<script setup>
-import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import Swal from 'sweetalert2';
-
-const form = useForm({
-    name: '',
-    tanggal: '',
-    keterangan: '',
-    total: '',
-    bukti: null
-});
-
-
-function saveGuest() {
-    form.post(route('cashout.store'), {
-        onSuccess: () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Pengeluaran Berhasil Ditambahkan',
-            });
-        }
-    });
-}
-
-function handleFileChange(event) {
-    const file = event.target.files[0];
-    form.bukti = file;
-}
-
-function cancel() {
-    window.location.href = route('cashout.index');
-}
-</script>
-
 <template>
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Tambah Data Pengeluaran</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Edit Data Pengeluaran</h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white p-6 shadow-sm rounded-lg">
-                <form @submit.prevent="saveGuest">
+                <form @submit.prevent="updateCashout">
                     <div class="mb-4">
                         <label for="tanggal" class="block text-sm font-medium text-gray-700">Tanggal</label>
                         <div class="mt-1">
@@ -77,6 +40,75 @@ function cancel() {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script setup>
+import { ref } from 'vue';
+import { usePage } from '@inertiajs/vue3';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+
+const { props } = usePage();
+const cashout = props.cashout;
+const form = ref({
+    tanggal: cashout.tanggal || '',
+    keterangan: cashout.keterangan || '',
+    total: cashout.nominal || '',
+    bukti: null
+});
+
+const id = route().params.id;
+
+function getCsrfToken() {
+    return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+}
+function updateCashout() {
+    const csrfTokenMetaTag = document.querySelector('meta[name="csrf-token"]');
+    const csrfToken = csrfTokenMetaTag ? csrfTokenMetaTag.getAttribute('content') : '';
+
+    const formData = new FormData();
+    formData.append('tanggal', form.value.tanggal);
+    formData.append('keterangan', form.value.keterangan);
+    formData.append('total', form.value.total);
+    if (form.value.bukti) {
+        formData.append('bukti', form.value.bukti);
+    }
+
+    axios.put(`/cashout/${id}`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    }).then(response => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Pengeluaran Berhasil Diubah',
+        }).then(() => {
+            window.location.href = route('cashout.index');
+        });
+    }).catch(error => {
+        console.error('Error updating cashout:', error.response.data);
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Pengeluaran Berhasil Diubah',
+        }).then(() => {
+            window.location.href = route('cashout.index');
+        });
+    });
+}
+
+
+function handleFileChange(event) {
+    const file = event.target.files[0];
+    form.value.bukti = file;
+}
+
+function cancel() {
+    window.location.href = route('cashout.index');
+}
+</script>
 
 <style scoped>
 /* Add additional styles if needed */

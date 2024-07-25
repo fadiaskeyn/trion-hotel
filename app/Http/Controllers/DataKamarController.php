@@ -10,8 +10,13 @@ class DataKamarController extends Controller
 {
     public function index()
     {
+        return Inertia::render('Kamar/index');
+    }
+
+    public function indexjson()
+    {
         $rooms = Rooms::all();
-        return Inertia::render('Kamar/index', ['rooms' => $rooms]);
+        return response()->json($rooms);
     }
 
     public function create()
@@ -21,46 +26,52 @@ class DataKamarController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
         $data = $request->validate([
             'room_number' => 'required',
-            'room_price' => 'required',
+            'room_price' => 'required|numeric',
             'room_status' => 'required',
         ]);
-        Rooms::create($data);
-        return redirect()->route('kamar.index')->with('success', 'Data kamar berhasil disimpan');
+
+        $room = Rooms::create($data);
+
+        return response()->json(['Success' => 'Data Kamar Berhasil Ditambahkan'], 200);
     }
 
 
-    
 
-    public function edit(string $id)
+    public function edit($id)
     {
         $room = Rooms::findOrFail($id);
         return Inertia::render('Kamar/edit', ['room' => $room]);
     }
 
-    public function update(Request $request, string $id)
-    {
-        $data = $request->validate([
-            'room_number' => 'required',
-            'room_price' => 'required',
-            'room_status' => 'required',
-        ]);
+    public function show($id)
+{
+    $room = Rooms::findOrFail($id);
+    return response()->json($room);
+}
 
-        $room = Rooms::findOrFail($id);
-        $room->update($data);
+public function update(Request $request, $id)
+{
+    $data = $request->validate([
+        'room_number' => 'required',
+        'room_price' => 'required',
+        'room_status' => 'required',
+    ]);
 
-        return redirect()->route('kamar.index')->with('success', 'Data kamar berhasil diubah');
-    }
+    $room = Rooms::findOrFail($id);
+    $room->update($data);
+    // return response()->json(['Success' => 'Room updated successfully'], 200);
+}
 
 
-    public function destroy(string $id)
-    {
-        $room = Rooms::findOrFail($id);
-        $room->delete();
 
-        return response()->json(['success' => 'Data kamar berhasil dihapus'], 200);
-    }
+    public function destroy($id)
+{
+    $room = Rooms::find($id);
+    $room->delete();
+    return response()->json(['message' => 'Room deleted successfully'], 200);
+
+}
 
 }

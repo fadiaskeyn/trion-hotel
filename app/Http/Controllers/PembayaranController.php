@@ -12,9 +12,15 @@ use Illuminate\Support\Facades\Storage;
 
 class PembayaranController extends Controller
 {
-    public function index(){
-        $payments = Payment::with('order.visitor')->get();
-        return Inertia::render('Pembayaran/index', ['payments' => $payments]);
+
+    public function index()
+    {
+        return response()->json(Payment::with('order.visitor')->get());
+    }
+
+    public function showIndexView()
+    {
+        return Inertia::render('Pembayaran/index');
     }
 
     public function create($id)
@@ -26,7 +32,7 @@ class PembayaranController extends Controller
 
     public function show($id)
     {
-        $payment = Payment::where('order_id', $id)->firstOrFail();
+        $payment = Payment::where('id', $id)->firstOrFail();
         $proofUrl = Storage::url($payment->buktibayar);
 
         return response()->json(['proof_url' => $proofUrl]);
@@ -67,56 +73,46 @@ class PembayaranController extends Controller
         $payment->delete();
         return response()->json(['success' => 'Pembayaran berhasil dihapus'], 200);
     }
+
+
+    public function edit($id)
+{
+    $payment = Payment::with('order')->findOrFail($id);
+    return Inertia::render('Pembayaran/edit', [
+        'payment' => $payment,
+        'order' => $payment->order
+    ]);
 }
 
-//     public function createInvoice(string $id)
-//     {
-//         $order = Order::with('visitor')->findOrFail($id);
 
-//         $clientAddress = new InvoiceAddress([
-//             'line_1' => $order->visitor->name,
-//             'city' => '',
-//             'postal_code' => '',
-//             'country' => 'Indonesia',
-//         ]);
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'payment_method' => 'required|string',
+        'payment_date' => 'required|date',
+        'buktibayar' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-//         $companyAddress = new InvoiceAddress([
-//             'line_1' => 'TRION',
-//             'line_2' => 'Jl. Example',
-//             'city' => 'Jakarta',
-//             'postal_code' => '12345',
-//             'country' => 'Indonesia',
-//         ]);
+    $payment = Payment::findOrFail($id);
+    $data = $request->only('payment_method', 'payment_date');
 
-//         $items = [
-//             new InvoiceItem([
-//                 'title' => 'Kamar',
-//                 'description' => 'Check In: ' . $order->checkin . ', Check Out: ' . $order->checkout,
-//                 'quantity' => 1,
-//                 'price_per_unit' => $order->amount,
-//                 'sub_total' => $order->amount,
-//             ])
-//         ];
+    if ($request->hasFile('buktibayar')) {
+        // Delete old proof if exists
+        if ($payment->proof_url) {
+            Storage::delete($payment->proof_url);
+        }
 
-//         $invoice = Invoice::make()
-//             ->series('TRION')
-//             ->sequence(1001)
-//             ->date(now())
-//             ->buyer($clientAddress)
-//             ->seller($companyAddress)
-//             ->currencySymbol('Rp')
-//             ->currencyCode('IDR')
-//             ->currencyFormat('{SYMBOL}{VALUE}')
-//             ->addItems($items)
-//             ->taxRate(0)
-//             ->notes('Terimakasih atas pemesanan anda')
-//             ->payUntilDays(0)
-//             ->filename('invoice_' . $order->id)
-//             ->save('public/invoices');
+        $filePath = $request->file('buktibayar')->store('proofs', 'public');
+        $data['proof_url'] = $filePath;
+    }
 
-//         return $invoice->toResponse();
-//     }
-// }
+    $payment->update($data);
+
+    return response()->json(['message' => 'Payment updated successfully']);
+}
+
+}
+
 
 
 

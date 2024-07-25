@@ -42,33 +42,41 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
+import axios from 'axios';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
 
-const form = useForm({
+const router = useRouter();
+
+const form = ref({
     room_number: '',
     room_price: '',
     room_status: ''
 });
 
-function saveRoom() {
-    form.post(route('kamar.store'), {
-        onSuccess: () => {
-            Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Data kamar berhasil disimpan',
-            }).then(() => {
-                window.location.href = route('kamar.index');
-            });
-        }
-    });
-}
+const saveRoom = async () => {
+    try {
+        await axios.post('/data-kamar', form.value);
+        Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Data kamar berhasil disimpan',
+        }).then(() => {
+           window.location.href = '/kamar';
+        });
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Terjadi kesalahan saat menyimpan data kamar',
+        });
+    }
+};
 
-function cancel() {
-    window.location.href = route('kamar.index');
-}
+const cancel = () => {
+    router.push({ name: 'kamar.index' });
+};
 </script>
 
 <style scoped>

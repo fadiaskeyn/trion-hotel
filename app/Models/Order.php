@@ -30,5 +30,11 @@ class Order extends Model
         return $this->hasOne(Payment::class);
     }
 
+    public function receptionist()
+    {
+        return $this->belongsTo(User::class, 'receptionist_name');
+    }
+
+
 }
 

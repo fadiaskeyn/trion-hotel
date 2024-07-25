@@ -15,14 +15,10 @@ class DashboardController extends Controller
         $today = Carbon::today();
         $startOfWeek = Carbon::now()->startOfWeek();
         $startOfMonth = Carbon::now()->startOfMonth();
-
-        // Calculating incomes from orders
         $incomeToday = Order::whereDate('created_at', $today)->sum('amount');
         $incomeThisWeek = Order::whereBetween('created_at', [$startOfWeek, Carbon::now()])->sum('amount');
         $incomeThisMonth = Order::whereBetween('created_at', [$startOfMonth, Carbon::now()])->sum('amount');
         $totalIncome = Order::sum('amount');
-
-        // Calculating expenses from cashouts
         $expenseToday = Cashout::whereDate('created_at', $today)->sum('nominal');
         $expenseThisWeek = Cashout::whereBetween('created_at', [$startOfWeek, Carbon::now()])->sum('nominal');
         $expenseThisMonth = Cashout::whereBetween('created_at', [$startOfMonth, Carbon::now()])->sum('nominal');

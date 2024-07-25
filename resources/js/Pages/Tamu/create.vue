@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from 'vue';
-import { useForm } from '@inertiajs/vue3';
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import axios from 'axios';
 import Swal from 'sweetalert2';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
-const form = useForm({
+const form = ref({
     name: '',
     nik: '',
     address: '',
@@ -12,15 +12,29 @@ const form = useForm({
 });
 
 function saveGuest() {
-    form.post(route('data-tamu.store'), {
-        onSuccess: () => {
+    axios.post('/data-tamu', form.value)
+        .then(response => {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
                 text: 'Data tamu berhasil Disimpan',
             });
-        }
-    });
+            form.value = {
+                name: '',
+                nik: '',
+                address: '',
+                phone: ''
+            };
+            window.location.href = route('data-tamu.index');
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Terjadi kesalahan saat menyimpan data tamu.',
+            });
+        });
 }
 
 function cancel() {

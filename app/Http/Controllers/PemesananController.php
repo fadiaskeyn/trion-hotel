@@ -9,11 +9,17 @@ use Illuminate\Http\Request;
 
 class PemesananController extends Controller
 {
-        public function index()
-        {
-            $orders = Order::with('visitor')->get();
-            return Inertia::render('Pemesanan/index', ['orders' => $orders]);
-        }
+
+    public function index()
+    {
+        return response()->json(Order::with('visitor')->get());
+    }
+
+
+    public function showIndexView()
+    {
+        return Inertia::render('Pemesanan/index');
+    }
 
 
 
@@ -22,7 +28,6 @@ class PemesananController extends Controller
             $visitor = Visitor::find($id);
             return Inertia::render('Pemesanan/create', ['visitor' => $visitor]);
         }
-
 
         public function store(Request $request)
         {
@@ -34,7 +39,7 @@ class PemesananController extends Controller
                 'rooms' => 'required|integer',
                 'amount' => 'required|numeric',
             ]);
-
+            
             Order::create([
                 'invoice' => 'INV-' . time(),
                 'visitor_id' => $request->visitor_id,
@@ -44,8 +49,7 @@ class PemesananController extends Controller
                 'rooms' => $request->rooms,
                 'amount' => $request->amount,
             ]);
-
-            return redirect()->route('order.index')->with('success', 'Data pemesanan berhasil ditambahkan');
+            return response()->json(['Success' => 'Data Kamar Berhasil Ditambahkan'], 200);
         }
 
 
@@ -56,33 +60,36 @@ class PemesananController extends Controller
             return response()->json(['success' => 'Data pemesanan berhasil dihapus'], 200);
         }
 
+
+
         public function edit(string $id)
-        {
-            $order = Order::with('visitor')->findOrFail($id);
-            return Inertia::render('Pemesanan/edit', ['order' => $order]);
-        }
+{
+    $order = Order::with('visitor')->findOrFail($id);
+    return Inertia::render('Pemesanan/edit', ['order' => $order]);
+}
 
-        public function update(Request $request, string $id)
-        {
-            $request->validate([
-                'visitor_id' => 'required|exists:visitors,id',
-                'checkin' => 'required|date',
-                'checkout' => 'required|date',
-                'extra_bed' => 'nullable|integer',
-                'rooms' => 'required|integer',
-                'amount' => 'required|numeric',
-            ]);
+public function update(Request $request, string $id)
+{
+    $request->validate([
+        'visitor_id' => 'required|exists:visitors,id',
+        'checkin' => 'required|date',
+        'checkout' => 'required|date',
+        'extra_bed' => 'nullable|integer',
+        'rooms' => 'required|integer',
+        'amount' => 'required|numeric',
+    ]);
 
-            $order = Order::findOrFail($id);
-            $order->update([
-                'visitor_id' => $request->visitor_id,
-                'checkin' => $request->checkin,
-                'checkout' => $request->checkout,
-                'extra_bed' => $request->extra_bed,
-                'rooms' => $request->rooms,
-                'amount' => $request->amount,
-            ]);
-            return redirect()->route('order.index')->with('success', 'Data pemesanan berhasil diubah');
-        }
+    $order = Order::findOrFail($id);
+    $order->update([
+        'visitor_id' => $request->visitor_id,
+        'checkin' => $request->checkin,
+        'checkout' => $request->checkout,
+        'extra_bed' => $request->extra_bed,
+        'rooms' => $request->rooms,
+        'amount' => $request->amount,
+    ]);
+    return redirect()->route('orders.index')->with('success', 'Data pemesanan berhasil diperbarui');
+}
+
     }
 

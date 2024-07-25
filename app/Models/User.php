@@ -22,7 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'level',
     ];
 
     /**
@@ -50,5 +50,9 @@ class User extends Authenticatable
         return $this->hasMany(Cashout::class);
     }
 
+    public function order(){
+
+        return $this->hasMany(Order::class);
+    }
 
 }

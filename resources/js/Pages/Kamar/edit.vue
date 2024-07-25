@@ -61,7 +61,7 @@ function saveRoom() {
             Swal.fire({
                 icon: 'success',
                 title: 'Success',
-                text: 'Data kamar berhasil diubah',
+                text: 'Data Kamar berhasil diubah',
             }).then(() => {
                 window.location.href = route('kamar.index');
             });
