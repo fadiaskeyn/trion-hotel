@@ -16,10 +16,24 @@ class DatabaseSeeder extends Seeder
         \App\Models\Visitor::factory(10)->create();
 
         \App\Models\User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@mail.com',
-            'password' => 'admin123',
-            'level' => 'admin',
+            'name' => 'owner',
+            'email' => 'owner@mail.com',
+            'password' => 'owner123',
+            'role' => 'owner',
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'resepsionis',
+            'email' => 'resepsionis@mail.com',
+            'password' => 'resepsionis123',
+            'role' => 'resepsionis',
+        ]);
+
+        \App\Models\User::factory()->create([
+            'name' => 'bendahara',
+            'email' => 'bendahara@mail.com',
+            'password' => 'bendahara123',
+            'role' => 'bendahara',
         ]);
     }
 }
