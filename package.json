@@ -17,11 +17,11 @@
         "postcss": "^8.4.31",
         "sass": "^1.56.1",
         "tailwindcss": "^3.2.1",
-        "vite": "^5.0.0",
-        "vue": "^3.2.37"
+        "vite": "^5.0.0"
     },
     "dependencies": {
         "vue-router": "^4.4.0",
-        "vue-sweetalert2": "^5.0.11"
+        "vue-sweetalert2": "^5.0.11",
+        "vue": "^3.2.37"
     }
 }

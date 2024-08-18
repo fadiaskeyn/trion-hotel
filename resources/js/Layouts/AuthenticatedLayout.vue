@@ -5,7 +5,8 @@ import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import NavLink from '@/Components/NavLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+// import { Link } from '@inertiajs/vue3';
+
 
 
 const showingNavigationDropdown = ref(false);
@@ -25,23 +26,23 @@ export default {
         <div class="min-h-screen flex bg-blue-900 text-white">
             <div class="w-64 flex flex-col">
                 <div class="p-4">
-                    <Link :href="route('dashboard')">
+                    <router-link to="/dashboard">
                     <img src="/build/assets/images/logo-trion.png" class="w-12 h-12 fill-current text-gray-500" />
-                    </Link>
+                    </router-link>
                 </div>
                 <nav class="flex-1 px-2 py-2 space-y-2">
                     <ul class="space-y-2">
                         <li>
-    <Link :href="route('dashboard')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700 flex items-center">
+    <router-link to="/dashboard" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700 flex items-center">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="30" height="30" class="flex-shrink-0 mr-2">
             <path d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM288 96a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM256 416c35.3 0 64-28.7 64-64c0-17.4-6.9-33.1-18.1-44.6L366 161.7c5.3-12.1-.2-26.3-12.3-31.6s-26.3 .2-31.6 12.3L257.9 288c-.6 0-1.3 0-1.9 0c-35.3 0-64 28.7-64 64s28.7 64 64 64zM176 144a32 32 0 1 0 -64 0 32 32 0 1 0 64 0zM96 288a32 32 0 1 0 0-64 32 32 0 1 0 0 64zm352-32a32 32 0 1 0 -64 0 32 32 0 1 0 64 0z"/>
         </svg>
         Dashboard
-    </Link>
+    </router-link>
 </li>
 
                         <li>
-                            <Link :href="route('data-tamu.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700 flex items-center">
+                            <router-link to="/data-tamu-cuy" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700 flex items-center">
                             <svg fill="#000000" width="30" height="30" viewBox="0 0 64 64" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 
 <g id="_x32_5_attachment"/>
@@ -117,25 +118,25 @@ export default {
 <g id="_x30_1_chatting"/>
 
 </svg>
-Data Tamu</Link>
+Data Tamu</router-link>
                         </li>
                         <li>
-                            <Link :href="route('order.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pemesanan</Link>
+                            <!-- <router-link :href="route('order.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pemesanan</router-link> -->
                         </li>
                         <li>
-                            <Link :href="route('payment.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pembayaran</Link>
+                            <!-- <router-link :href="route('payment.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Pembayaran</router-link> -->
                         </li>
                         <li>
-                            <Link :href="route('kamar.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Data Kamar</Link>
+                            <!-- <router-link :href="route('kamar.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Data Kamar</router-link> -->
                         </li>
                         <li>
-                            <Link :href="route('cashin.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Laporan Pemasukan</Link>
+                            <!-- <router-link :href="route('cashin.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Laporan Pemasukan</router-link> -->
                         </li>
                         <li>
-                            <Link :href="route('cashout.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Laporan Pengeluaran</Link>
+                            <!-- <router-link :href="route('cashout.index')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">Laporan Pengeluaran</router-link> -->
                         </li>
                         <li>
-                            <Link :href="route('user')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">User</Link>
+                            <!-- <router-link :href="route('user')" class="block ps-3 pe-4 py-2 text-start text-base font-medium hover:bg-blue-700">User</router-link> -->
                         </li>
                     </ul>
                 </nav>
@@ -151,13 +152,13 @@ Data Tamu</Link>
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <router-link to="/dashboard">
                                     <!-- <img src="/build/assets/images/logo-trion.png" class="w-10 h-10 fill-current text-gray-500" /> -->
-                                </Link>
+                                </router-link>
                             </div>
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')"></NavLink>
+                                <!-- <NavLink :href="route('dashboard')"></NavLink> -->
                             </div>
                         </div>
 
@@ -189,7 +190,7 @@ Data Tamu</Link>
                                     </template>
 
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')"> Profile </DropdownLink>
+                                        <DropdownLink to='/profile/edit'> Profile </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button">
                                             Log Out
                                         </DropdownLink>
@@ -237,8 +238,8 @@ Data Tamu</Link>
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('dashboard')" :active="route().current(' ')">
-                        </ResponsiveNavLink>
+                        <!-- <ResponsiveNavLink :href="route('dashboard')" :active="route().current(' ')">
+                        </ResponsiveNavLink> -->
                     </div>
 
                     <!-- Responsive Settings Options -->

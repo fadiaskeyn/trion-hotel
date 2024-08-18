@@ -11,7 +11,8 @@ class DataTamuController extends Controller
 
     public function index()
     {
-        return Inertia::render('Tamu/index');
+        // return Inertia::render('Tamu/index');
+        return view('tamu.index');
     }
 
     public function indexjson()
